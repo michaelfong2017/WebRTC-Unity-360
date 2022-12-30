@@ -23,6 +23,10 @@ namespace Unity.WebRTC.AntMedia.SDK
         [SerializeField] private Transform rotateObject;
 #pragma warning restore 0649
 
+        public GameObject renderTarget;
+        Material material;
+        RenderTexture renderTexture;
+
         public const int MODE_P2P = 0;
         public const int MODE_PUBLISH = 1;
         public const int MODE_PLAY = 2;
@@ -30,7 +34,7 @@ namespace Unity.WebRTC.AntMedia.SDK
         private AudioStreamTrack audioStreamTrack;
         private WebCamTexture webCamTexture;
         private MediaStream localStream;
-        private int mode = MODE_PUBLISH;
+        private int mode = MODE_PLAY;
 
         WebRTCClient webRTClient;
 
@@ -54,7 +58,7 @@ namespace Unity.WebRTC.AntMedia.SDK
 
         private void Start()
         {
-            string websocketUrl = "ws://localhost:5080/LiveApp/websocket";
+            string websocketUrl = "wss://stream.robocore.ai:5443/LiveApp/websocket";
             //string websocketUrl = "wss://meet.antmedia.io:5443/LiveApp/websocket";
             webRTClient = new WebRTCClient("stream1", this, websocketUrl);
             joinButton.interactable = true;
@@ -63,12 +67,18 @@ namespace Unity.WebRTC.AntMedia.SDK
 
 
 
+            material = renderTarget.GetComponent<MeshRenderer>().material;
+            renderTexture = (RenderTexture)material.mainTexture;
             
+
+
             if(mode != MODE_PLAY) {
                 CaptureAudioStart();
                 StartCoroutine(CaptureVideoStart());
             }
             StartCoroutine(WebRTC.Update());
+
+            StartCoroutine(TestOnClickJoin());
         }
 
         private void Update()
@@ -79,6 +89,12 @@ namespace Unity.WebRTC.AntMedia.SDK
             }
 
             webRTClient.Update();
+        }
+
+        IEnumerator TestOnClickJoin()
+        {
+            yield return new WaitForSeconds(3);
+            Join();
         }
 
         private void Join()
@@ -101,7 +117,7 @@ namespace Unity.WebRTC.AntMedia.SDK
                 {
                     video.OnVideoReceived += tex =>
                     {
-                        receiveImage.texture = tex;
+                        Graphics.Blit(tex, renderTexture);
                     };
                 }
 

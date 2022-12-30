@@ -72,7 +72,7 @@ namespace Unity.WebRTC.AntMedia.SDK
             localPC = new RTCPeerConnection(ref configuration);
             localPC.OnIceCandidate = candidate => { 
                 Debug.Log("ICE candidate created:"+ candidate.Candidate);
-                SendCandidateMessage(candidate.sdpMid, (long)candidate.SdpMLineIndex, candidate.Candidate); 
+                SendCandidateMessage(candidate.SdpMid, (long)candidate.SdpMLineIndex, candidate.Candidate); 
             };
             localPC.OnIceConnectionChange = state => { 
                 switch (state)
