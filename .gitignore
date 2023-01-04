@@ -58,3 +58,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Assets/Oculus
+Assets/XR
+
+Temi360.apk_BackUpThisFolder_ButDontShipItWithYourGame/il2cppOutput
+Temi360.apk_BackUpThisFolder_ButDontShipItWithYourGame/Managed
+UserSettings

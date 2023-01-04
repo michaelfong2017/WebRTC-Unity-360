@@ -25,7 +25,6 @@ namespace Unity.WebRTC.AntMedia.SDK
 
         public GameObject renderTarget;
         Material material;
-        RenderTexture renderTexture;
 
         public const int MODE_P2P = 0;
         public const int MODE_PUBLISH = 1;
@@ -68,7 +67,6 @@ namespace Unity.WebRTC.AntMedia.SDK
 
 
             material = renderTarget.GetComponent<MeshRenderer>().material;
-            renderTexture = (RenderTexture)material.mainTexture;
             
 
 
@@ -117,7 +115,10 @@ namespace Unity.WebRTC.AntMedia.SDK
                 {
                     video.OnVideoReceived += tex =>
                     {
-                        Graphics.Blit(tex, renderTexture);
+                        // The GameObject Texture is for debugging.
+                        // GameObject go = GameObject.Find("Texture");
+				        // go.GetComponent<RawImage>().texture = tex;
+                        material.SetTexture("_MainTex", tex);
                     };
                 }
 

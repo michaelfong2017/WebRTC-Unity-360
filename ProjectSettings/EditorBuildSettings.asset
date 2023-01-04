@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AntMedia/Samples/AMSPeer2Peer.unity
     guid: 0ff78d93b95d29044b16be8c4cce1c6b
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d56361549469d4b0c8f81edbf9e2df5a, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 66efb7ac74afd4350a49f3eb415d23d7, type: 2}
